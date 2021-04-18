@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    tracecap_opentracing (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    benchmark-ips (2.8.4)
+    rake (13.0.3)
+    rake-compiler (1.1.1)
+      rake
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  benchmark-ips
+  rake-compiler
+  tracecap_opentracing!
+
+BUNDLED WITH
+   2.2.9
