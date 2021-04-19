@@ -12,7 +12,7 @@ end
 recurse(500) do # make the stack deep before benchmarking
   Benchmark.ips do |x|
     x.report("tracing") do
-      TracecapOpenTracing::emit_span(0, 0, "hello", "world", "blah")
+      TracecapOpenTracing::emit_span(0, 0, "hello", "world", "{}")
     end
 
     x.report("active check") do
