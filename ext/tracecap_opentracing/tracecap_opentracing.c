@@ -30,7 +30,7 @@ static struct {
   int lines_buffer[BUF_SIZE];
 } _tracecap_data;
 
-static inline int tracecap_update_stack()
+static inline uint64_t tracecap_update_stack()
 {
   int num;
   int stack_left = sizeof(_tracecap_data.stack);
@@ -63,9 +63,30 @@ static inline int tracecap_update_stack()
 
     VALUE name = rb_profile_frame_full_label(frame);
     VALUE file = rb_profile_frame_path(frame);
+    char *file_str = StringValueCStr(file);
+    char maybe_package[128] = {0};
+    char *gems_slash = strstr(file_str, "/gems/");
+    char *next = gems_slash;
+    
+    // find the last occurance of /gems/
+    while (next != NULL && *next != 0) {
+      next = strstr(next + 1, "/gems/");
+      if (next != NULL) {
+        gems_slash = next;
+      }
+    }
+
+    if (gems_slash != NULL) {
+      char *gem_name_start = gems_slash + strlen("/gems/");
+      char *inside_gem = strchr(gem_name_start, '/');
+      if (inside_gem != NULL) {
+        file_str = inside_gem + 1; // skip over '/'
+        snprintf(maybe_package, sizeof(maybe_package), "%.*s:", (int)(inside_gem - gem_name_start), gem_name_start);
+      }
+    }
 
     if (stack_left > 0) {
-      int n = snprintf(stack_curr, stack_left, "%s:%d:%s\n", StringValueCStr(file), line, StringValueCStr(name));
+      int n = snprintf(stack_curr, stack_left, "%s%s:%d:%s\n", maybe_package, file_str, line, StringValueCStr(name));
       stack_left -= n;
       stack_curr += n;
     } else {
@@ -78,7 +99,7 @@ static inline int tracecap_update_stack()
   *stack_curr = '\0';
   _tracecap_data.stack_last_depth = i;
 
-  return (int)(stack_curr - _tracecap_data.stack);
+  return (uint64_t)(stack_curr - _tracecap_data.stack);
 }
 
 VALUE rb_tracecap_emit_span(VALUE self, VALUE duration, VALUE since_end, VALUE component, VALUE description, VALUE metadata)
