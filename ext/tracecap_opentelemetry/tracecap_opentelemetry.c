@@ -135,12 +135,12 @@ rb_tracecap_is_active(VALUE self)
 }
 
 void
-Init_tracecap_opentracing(void) {
-  VALUE tracecap_opentracing;
+Init_tracecap_opentelemetry(void) {
+  VALUE tracecap_opentelemetry;
 
   _tracecap_data.stack_last_depth = 0;
 
-  tracecap_opentracing = rb_const_get(rb_cObject, rb_intern("TracecapOpenTelemetry"));
-  rb_define_singleton_method(tracecap_opentracing, "emit_span", rb_tracecap_emit_span, 5);
-  rb_define_singleton_method(tracecap_opentracing, "active?", rb_tracecap_is_active, 0);
+  tracecap_opentelemetry = rb_const_get(rb_cObject, rb_intern("TracecapOpenTelemetry"));
+  rb_define_singleton_method(tracecap_opentelemetry, "emit_span", rb_tracecap_emit_span, 5);
+  rb_define_singleton_method(tracecap_opentelemetry, "active?", rb_tracecap_is_active, 0);
 }
