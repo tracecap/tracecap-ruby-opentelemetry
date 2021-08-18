@@ -1,6 +1,6 @@
 require "mkmf"
 
-create_makefile "tracecap_opentracing/tracecap_opentracing"
+create_makefile "tracecap_opentelemetry/tracecap_opentelemetry"
 
 # patch in dtrace bits, since mkmf seems to be missing options to override this?
 

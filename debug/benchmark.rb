@@ -1,5 +1,5 @@
 require 'benchmark/ips'
-require 'tracecap_opentracing'
+require 'tracecap_opentelemetry'
 
 def recurse(n, &block)
   if n > 0
@@ -12,11 +12,11 @@ end
 recurse(500) do # make the stack deep before benchmarking
   Benchmark.ips do |x|
     x.report("tracing") do
-      TracecapOpenTracing::emit_span(0, 0, "hello", "world", "{}")
+      TracecapOpenTelemetry::emit_span(0, 0, "hello", "world", "{}")
     end
 
     x.report("active check") do
-      TracecapOpenTracing::active?
+      TracecapOpenTelemetry::active?
     end
   end
 end

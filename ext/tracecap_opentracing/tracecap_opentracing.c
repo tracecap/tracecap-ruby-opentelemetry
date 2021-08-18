@@ -140,7 +140,7 @@ Init_tracecap_opentracing(void) {
 
   _tracecap_data.stack_last_depth = 0;
 
-  tracecap_opentracing = rb_const_get(rb_cObject, rb_intern("TracecapOpenTracing"));
+  tracecap_opentracing = rb_const_get(rb_cObject, rb_intern("TracecapOpenTelemetry"));
   rb_define_singleton_method(tracecap_opentracing, "emit_span", rb_tracecap_emit_span, 5);
   rb_define_singleton_method(tracecap_opentracing, "active?", rb_tracecap_is_active, 0);
 }

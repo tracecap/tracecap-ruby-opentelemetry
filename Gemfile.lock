@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tracecap_opentracing (0.1.0)
+    tracecap_opentelemetry (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -18,7 +18,7 @@ PLATFORMS
 DEPENDENCIES
   benchmark-ips
   rake-compiler
-  tracecap_opentracing!
+  tracecap_opentelemetry!
 
 BUNDLED WITH
    2.2.9
