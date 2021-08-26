@@ -4,6 +4,9 @@ require 'opentelemetry/sdk'
 
 module TracecapOpenTelemetry
   class Exporter < OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter # pretend to be this for now for 'simple_exporter?' check
+    SUCCESS = OpenTelemetry::SDK::Trace::Export::SUCCESS
+    FAILURE = OpenTelemetry::SDK::Trace::Export::FAILURE
+    
     def initialize
       @stopped = false
     end
