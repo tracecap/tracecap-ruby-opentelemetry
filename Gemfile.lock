@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tracecap_opentelemetry (0.1.0)
+    tracecap_opentelemetry (0.1.1)
 
 GEM
   remote: https://rubygems.org/
