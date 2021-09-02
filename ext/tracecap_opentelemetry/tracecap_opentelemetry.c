@@ -62,8 +62,9 @@ static inline uint64_t tracecap_update_stack()
     _tracecap_data.stack_written_lines[i] = line;
 
     VALUE name = rb_profile_frame_full_label(frame);
+    char *name_str = (name == Qnil ? "" : StringValueCStr(name));
     VALUE file = rb_profile_frame_path(frame);
-    char *file_str = StringValueCStr(file);
+    char *file_str = (file == Qnil ? "" : StringValueCStr(file));
     char maybe_package[128] = {0};
     char *gems_slash = strstr(file_str, "/gems/");
     char *next = gems_slash;
@@ -86,7 +87,7 @@ static inline uint64_t tracecap_update_stack()
     }
 
     if (stack_left > 0) {
-      int n = snprintf(stack_curr, stack_left, "%s:%s:%d:%s\n", maybe_package, file_str, line, StringValueCStr(name));
+      int n = snprintf(stack_curr, stack_left, "%s:%s:%d:%s\n", maybe_package, file_str, line, name_str);
       stack_left -= n;
       stack_curr += n;
     } else {
